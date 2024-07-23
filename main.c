@@ -5,16 +5,11 @@
 #include <string.h>
 
 #include "pico/stdlib.h"
-
-uint16_t rusty_add(uint16_t first, uint16_t second);
-
+#include "rust/bindings.h"
 
 const uint8_t PIN_LED = 15;
 
-
 volatile bool led_state = false;
-
-
 
 bool repeating_toogle_led() {
     led_state = !led_state;
@@ -34,7 +29,6 @@ struct repeating_timer *setup_led() {
     return led_timer;
 }
 
-
 int main() {
     stdio_init_all();
 
@@ -47,9 +41,14 @@ int main() {
 
     struct repeating_timer *led_timer = setup_led();
 
+    uint8_t buffer[20];
+
     while (true) {
         uint16_t answer = rusty_add(10u, 20u);
         printf("%d", answer);
         sleep_ms(500);
+
+        array_test(buffer, 20);
+
     }
 }
