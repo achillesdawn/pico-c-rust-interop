@@ -29,6 +29,17 @@ struct repeating_timer *setup_led() {
     return led_timer;
 }
 
+void print_uint8_array(const uint8_t *data, size_t len) {
+    printf("Array: [");
+    for (size_t i = 0; i < len; i++) {
+        printf("%u", data[i]); 
+        if (i < len - 1) {
+            printf(", ");
+        }
+    }
+    printf("]\n");
+}
+
 int main() {
     stdio_init_all();
 
@@ -45,10 +56,10 @@ int main() {
 
     while (true) {
         uint16_t answer = rusty_add(10u, 20u);
-        printf("%d", answer);
+        printf("%d\n", answer);
         sleep_ms(500);
 
         array_test(buffer, 20);
-
+        print_uint8_array(buffer, 20);
     }
 }
