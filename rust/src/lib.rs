@@ -11,7 +11,7 @@ extern "C" {
     // C function declarations go here
     // extern C functions are by nature unsafe
     // fn printf(format: *const u8, ...);
-    
+
 }
 
 #[no_mangle]
@@ -23,9 +23,12 @@ pub extern "C" fn rusty_add(first: u16, second: u16) -> u16 {
 pub extern "C" fn array_test(buf: *mut u8, len: cty::size_t) -> () {
     let data_slice = unsafe { core::slice::from_raw_parts_mut(buf, len) };
 
-    for (idx, byte) in data_slice.iter_mut().enumerate() {
-        *byte = idx as u8;
+    let mut v: heapless::Vec<u8, 20> = heapless::Vec::new();
+    for (_, byte) in data_slice.iter_mut().enumerate() {
+        v.push(*byte).unwrap();
+    }
+
+    for (idx, item) in v.iter().rev().enumerate() {
+        data_slice[idx] = *item;
     }
 }
-
-

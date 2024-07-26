@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 cty = "0.2.2"
+heapless = "0.8.0"
 
 [build-dependencies]
 cbindgen = "0.26.0"
